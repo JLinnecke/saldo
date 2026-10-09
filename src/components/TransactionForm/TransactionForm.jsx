@@ -2,7 +2,7 @@ import { useState } from "react";
 import styles from "./TransactionForm.module.css";
 import Calendar from "react-calendar";
 
-function TransactionForm({ setTransactions }) {
+function TransactionForm({ addTransaction }) {
   const [transactionType, setTransactionType] = useState("income");
   const [amount, inputAmount] = useState("");
   const [date, setDate] = useState(new Date());
@@ -16,7 +16,7 @@ function TransactionForm({ setTransactions }) {
       date,
     };
 
-    setTransactions((prevTransaction) => [...prevTransaction, transaction]);
+    addTransaction(transaction);
     inputAmount("");
   }
 
