@@ -1,3 +1,21 @@
 .transactionListContainer {
   border: 1px solid white;
 }
+
+.transactionItemHeadline {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 2fr 1fr;
+}
+
+.transactionItemHeadline p {
+  width: fit-content;
+  justify-self: center;
+}
+
+.transactionItemHeadline p::after {
+  content: "";
+  display: block;
+  width: 100%;
+  border-bottom: 1px solid lightgray;
+  margin-bottom: 1rem;
+}

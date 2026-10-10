@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ExpenseOverview from "../ExpenseOverview/ExpenseOverview";
 import Header from "../Header/Header";
 import TransactionForm from "../TransactionForm/TransactionForm";
@@ -6,29 +6,20 @@ import TransactionList from "../TransactionList/TransactionList";
 
 import styles from "./Saldo.module.css";
 
-const months = [
-  {
-    year: 2026,
-    month: 10,
-    income: [],
-    expenses: [],
-  },
-  {
-    year: 2026,
-    month: 11,
-    income: [],
-    expenses: [],
-  },
-  {
-    year: 2026,
-    month: 12,
-    income: [],
-    expenses: [],
-  },
-];
-
 function Saldo() {
-  const [monthlyTransactions, setMonthlyTransactions] = useState(months);
+  const [monthlyTransactions, setMonthlyTransactions] = useState(
+    () => JSON.parse(localStorage.getItem("monthlyTransactions")) || [],
+  );
+
+  useEffect(
+    function () {
+      localStorage.setItem(
+        "monthlyTransactions",
+        JSON.stringify(monthlyTransactions),
+      );
+    },
+    [monthlyTransactions],
+  );
 
   function addTransaction(transaction) {
     const year = transaction.date.getFullYear();
@@ -37,6 +28,17 @@ function Saldo() {
     const monthIndex = monthlyTransactions.findIndex((element) => {
       return element.year === year && element.month === month;
     });
+
+    if (monthIndex === -1) {
+      const newMonthlyTransaction = {
+        year: year,
+        month: month,
+        income: transaction.type === "income" ? [transaction] : [],
+        expenses: transaction.type === "expense" ? [transaction] : [],
+      };
+      setMonthlyTransactions([...monthlyTransactions, newMonthlyTransaction]);
+      return;
+    }
 
     if (transaction.type === "income") {
       const newIncome = [
@@ -62,7 +64,7 @@ function Saldo() {
       setMonthlyTransactions(monthlyExpenses);
     }
 
-    console.log(monthIndex);
+    console.log(monthIndex, monthlyTransactions);
   }
 
   return (
@@ -72,7 +74,7 @@ function Saldo() {
       <div className={styles.gridLayout}>
         <div>
           <TransactionForm addTransaction={addTransaction} />
-          <TransactionList />
+          <TransactionList monthlyTransactions={monthlyTransactions} />
         </div>
         <ExpenseOverview />
       </div>
