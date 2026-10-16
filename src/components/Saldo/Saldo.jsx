@@ -6,6 +6,10 @@ import TransactionList from "../TransactionList/TransactionList";
 
 import styles from "./Saldo.module.css";
 
+/**
+ * Verwaltet Transaktionen nach Monaten und synchronisiert sie mit localStorage.
+ * @returns {React.JSX.Element} Oberfläche zur Erfassung und Anzeige der Transaktionen.
+ */
 function Saldo() {
   const [monthlyTransactions, setMonthlyTransactions] = useState(
     () => JSON.parse(localStorage.getItem("monthlyTransactions")) || [],
@@ -21,6 +25,12 @@ function Saldo() {
     [monthlyTransactions],
   );
 
+  /**
+   * Ordnet eine Einnahme oder Ausgabe dem Monat ihres Datums zu.
+   * @param {Object} transaction - Hinzuzufügende Transaktion.
+   * @param {Date} transaction.date - Datum zur Bestimmung von Jahr und Monat.
+   * @param {string} transaction.type - Transaktionsart: income oder expense.
+   */
   function addTransaction(transaction) {
     const year = transaction.date.getFullYear();
     const month = transaction.date.getMonth() + 1;

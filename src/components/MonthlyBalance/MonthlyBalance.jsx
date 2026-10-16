@@ -1,5 +1,11 @@
 import styles from "./MonthlyBalance.module.css";
 
+/**
+ * Berechnet Einnahmen minus Ausgaben eines Monats und markiert das Vorzeichen farblich.
+ * @param {Object} props - Eigenschaften der Monatsanzeige.
+ * @param {Object} props.monthData - Monatsgruppe mit Einnahmen und Ausgaben.
+ * @returns {React.JSX.Element} Anzeige des berechneten Monatssaldos.
+ */
 function MonthlyBalance({ monthData }) {
   const monthIncomeAmount = monthData.income.reduce((acc, cur) => {
     return acc + Number(cur.amount);

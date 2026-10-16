@@ -3,6 +3,12 @@ import MonthlyBalance from "../MonthlyBalance/MonthlyBalance";
 import TransactionItem from "../TransactionItem/TransactionItem";
 import styles from "./TransactionList.module.css";
 
+/**
+ * Zeigt je Monat zuerst Einnahmen, dann Ausgaben und den zugehörigen Saldo an.
+ * @param {Object} props - Eigenschaften der Liste.
+ * @param {Object[]} props.monthlyTransactions - Monatsgruppen mit Einnahmen und Ausgaben.
+ * @returns {React.JSX.Element} Transaktionsliste mit Monatssalden.
+ */
 function TransactionList({ monthlyTransactions }) {
   return (
     <div className={styles.transactionListContainer}>
